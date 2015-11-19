@@ -1,8 +1,13 @@
 import commands from './behaviors/commands';
+import positioning from './behaviors/positioning';
 
 class SmHelperToolbar {
   beforeRegister() {
     this.is = 'sm-helper-toolbar';
+
+    this.properties = {
+      range: Object
+    };
   }
 
   get behaviors() {
@@ -10,7 +15,8 @@ class SmHelperToolbar {
       simpla.behaviors.active({
         reflectToAttribute: true
       }),
-      commands
+      commands,
+      positioning
     ];
   }
 }

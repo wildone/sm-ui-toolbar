@@ -56,6 +56,70 @@
             expect(component.$$('.tool#bold')).to.be.ok;
           });
         });
+
+        describe('positioning and range', function() {
+          var fakeWindowOffsets = { pageXOffset: 100, pageYOffset: 250 },
+              fakeWindowBounds = { innerWidth: 800, innerHeight: 600 },
+              fakeRangeBounds = { top: 300, left: 400, width: 100 },
+              fakeRangeOutsideBounds = { top: 0, left: 0, width: 100 },
+              fakeRange,
+              // Should be centre of range, at the top of the range
+              //  plus any scroll offsets of the window
+              fakeToolbarPosition = {
+                top: fakeRangeBounds.top + fakeWindowOffsets.pageYOffset,
+                left: fakeRangeBounds.left + fakeRangeBounds.width/2 + fakeWindowOffsets.pageXOffset
+              };
+
+          before(function() {
+            window.pageXOffset = fakeWindowOffsets.pageXOffset;
+            window.pageYOffset = fakeWindowOffsets.pageYOffset;
+            window.innerWidth = fakeWindowBounds.innerWidth;
+            window.innerHeight = fakeWindowBounds.innerHeight;
+          });
+
+          beforeEach(function() {
+            fakeRange = {
+              getBoundingClientRect: function() {
+                return fakeRangeBounds;
+              }
+            };
+          });
+
+          describe('positioning', function() {
+            it('should update styling when position changes', function() {
+              var top = 200,
+                  left = 100;
+
+              // Must set using Polymers, so as to trigger any observers
+              component.set('position.top', top);
+              component.set('position.left', left);
+
+              expect(component.style.top).to.equal(top + 'px');
+              expect(component.style.left).to.equal(left + 'px');
+            });
+
+            it('should be inside viewport at all times', function() {
+              var componentBounds;
+              component.active = true;
+
+              sinon.stub(fakeRange, 'getBoundingClientRect').returns(fakeRangeOutsideBounds);
+              component.range = fakeRange;
+              componentBounds = component.getBoundingClientRect();
+
+              expect(componentBounds.top).to.be.at.least(window.pageYOffset);
+              expect(componentBounds.left).to.be.at.least(window.pageXOffset);
+            });
+          });
+
+          describe('range', function() {
+            it('should update position on change of range', function() {
+              component.range = fakeRange;
+
+              expect(component.position.left).to.equal(fakeToolbarPosition.left);
+              expect(component.position.top).to.equal(fakeToolbarPosition.top);
+            });
+          });
+        });
       });
     </script>
   </body>

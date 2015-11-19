@@ -11,7 +11,20 @@
     <link rel="import" href="../sm-helper-toolbar.html" />
   </head>
   <body>
-    <h1>Standalone active toolbar</h1>
-    <sm-helper-toolbar active></sm-helper-toolbar>
+    <template id="app" is="dom-bind">
+      <h1>Standalone active toolbar</h1>
+      <sm-helper-toolbar active position="[[defaultPosition]]"></sm-helper-toolbar>
+    </template>
+
+    <script>
+      var app = document.getElementById('app');
+
+      app.addEventListener('dom-change', function() {
+        app.defaultPosition = {
+          top: 75,
+          left: 100
+        };
+      });
+    </script>
   </body>
 </html>
