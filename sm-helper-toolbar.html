@@ -1,9 +1,17 @@
-<html><head><meta charset="UTF-8"><link rel="import" href="../simpla/simpla.html"><link rel="import" href="../polymer/polymer.html"></head><body><dom-module id="sm-module-toolbar">
+<html><head><meta charset="UTF-8"><link rel="import" href="../sm-helper-button/sm-helper-button.html"><link rel="import" href="../simpla/simpla.html"><link rel="import" href="../polymer/polymer.html"></head><body><dom-module id="sm-helper-toolbar">
   <template>
     <style include="sm-css"></style>
-    <link rel="stylesheet" href="./sm-module-toolbar.css">
+    <style>:root{--icon-size:14px}:host{@apply(--typography);background:#fff;position:absolute;display:none;box-shadow:0 1px 1px var(--light-black);border-radius:var(--border-radius);overflow:hidden;z-index:var(--on-top)}:host([active]){display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}.tool{width:var(--tool-size);-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;color:var(--blue)}.tool.disabled{pointer-events:none;color:var(--gray)}.tool__target{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;opacity:0;speak:none;cursor:pointer}.tool::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--blue);display:none}.tool[active]::after{display:block}.link{position:relative;width:0;overflow:hidden}.link__input{position:absolute;width:100%;height:100%;padding:0 var(--tool-size)0 8px;color:var(--textColor)}.link__clear{position:absolute;right:0;width:var(--tool-size);color:var(--gray)}.link__clear:hover{color:red!important}</style>
+
+    
+    
+    <template is="dom-repeat" id="tools" items="[[commands]]">
+      <sm-helper-button id="[[item]]" class="tool" icon="simpla:[[item]]">
+        <button class="tool__target" aria-hidden="true"></button>
+      </sm-helper-button>
+    </template>
 
   </template>
-  <script>!function(e){function n(t){if(r[t])return r[t].exports;var o=r[t]={exports:{},id:t,loaded:!1};return e[t].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var r={};return n.m=e,n.c=r,n.p="",n(0)}([function(e,n,r){e.exports=r(1)},function(e,n){"use strict";function r(e,n){if(!(e instanceof n))throw new TypeError("Cannot call a class as a function")}var t=function(){function e(e,n){for(var r=0;r<n.length;r++){var t=n[r];t.enumerable=t.enumerable||!1,t.configurable=!0,"value"in t&&(t.writable=!0),Object.defineProperty(e,t.key,t)}}return function(n,r,t){return r&&e(n.prototype,r),t&&e(n,t),n}}(),o=function(){function e(){r(this,e)}return t(e,[{key:"beforeRegister",value:function(){this.is="sm-module-toolbar"}}]),e}();Polymer(o)}]);</script>
+  <script>!function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={exports:{},id:n,loaded:!1};return e[n].call(o.exports,o,o.exports,t),o.loaded=!0,o.exports}var r={};return t.m=e,t.c=r,t.p="",t(0)}([function(e,t,r){e.exports=r(2)},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=["bold","italic","underline","link"];t["default"]={properties:{commands:{type:Array,value:function(){return r.slice()}}}},e.exports=t["default"]},function(e,t,r){"use strict";function n(e){return e&&e.__esModule?e:{"default":e}}function o(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var i=function(){function e(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}return function(t,r,n){return r&&e(t.prototype,r),n&&e(t,n),t}}(),u=r(1),a=n(u),l=function(){function e(){o(this,e)}return i(e,[{key:"beforeRegister",value:function(){this.is="sm-helper-toolbar"}},{key:"behaviors",get:function(){return[simpla.behaviors.active({reflectToAttribute:!0}),a["default"]]}}]),e}();Polymer(l)}]);</script>
 </dom-module>
 </body></html>

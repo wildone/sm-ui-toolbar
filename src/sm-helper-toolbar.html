@@ -3,6 +3,14 @@
     <style include="sm-css"></style>
     <link rel="stylesheet" href="./sm-helper-toolbar.css" />
 
+    <!-- Action controls -->
+    <!-- dummy <button> inside for Safari focus -->
+    <template is="dom-repeat" id="tools" items="[[commands]]">
+      <sm-helper-button id="[[item]]" class="tool" icon="simpla:[[item]]">
+        <button class="tool__target" aria-hidden="true"></button>
+      </sm-helper-button>
+    </template>
+
   </template>
   <script src="./sm-helper-toolbar.js"></script>
 </dom-module>

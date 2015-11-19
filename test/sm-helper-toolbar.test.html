@@ -29,6 +29,33 @@
         it('is okay', function() {
           expect(component).to.be.ok;
         });
+
+        describe('commands', function() {
+          var defaultSet = ['bold', 'italic', 'underline', 'link'],
+              noBold = ['italic', 'underline', 'link'],
+              toolsTemplate;
+
+          beforeEach(function() {
+            component.set('commands', defaultSet);
+            toolsTemplate = component.$.tools;
+          });
+
+          it('should hide commands that are disabled', function() {
+            component.set('commands', noBold);
+            toolsTemplate.render();
+
+            expect(component.$$('.tool#bold')).to.not.be.ok;
+          });
+
+          it('should show commands that are enabled', function() {
+            component.set('commands', noBold);
+            component.set('commands', defaultSet);
+
+            toolsTemplate.render();
+
+            expect(component.$$('.tool#bold')).to.be.ok;
+          });
+        });
       });
     </script>
   </body>

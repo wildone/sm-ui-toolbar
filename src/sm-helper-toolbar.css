@@ -1,0 +1,97 @@
+/**
+ * Config
+ */
+:root {
+
+  --icon-size: 14px;
+
+}
+
+/**
+ * Toolbar
+ */
+:host {
+  @apply(--typography);
+  background: white;
+  position: absolute;
+  display: none;
+  box-shadow: 0 1px 1px var(--light-black);
+  border-radius: var(--border-radius);
+	overflow: hidden;
+  z-index: var(--on-top);
+}
+
+:host([active]) {
+  display: flex;
+}
+
+/**
+ * Tools
+ */
+.tool {
+  width: var(--tool-size);
+	flex-shrink: 0;
+	color: var(--blue);
+}
+
+.tool.disabled {
+  pointer-events: none;
+  color: var(--gray);
+}
+
+/* Dummy <button> to retain focus */
+.tool__target {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  speak: none;
+  cursor: pointer;
+}
+
+/* Active highlights */
+.tool::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--blue);
+  display: none;
+}
+
+.tool[active]::after {
+  display: block;
+}
+
+/**
+ * Link UI
+ */
+.link {
+	position: relative;
+	width: 0;
+  overflow: hidden;
+}
+
+.link__input {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	padding: 0 var(--tool-size) 0 8px;
+	color: var(--textColor);
+}
+
+.link__clear {
+	position: absolute;
+	right: 0;
+  width: var(--tool-size);
+	color: var(--gray);
+}
+
+.link__clear:hover {
+	color: red !important;
+}
