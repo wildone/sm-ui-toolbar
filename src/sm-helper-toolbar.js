@@ -6,7 +6,8 @@ class SmHelperToolbar {
     this.is = 'sm-helper-toolbar';
 
     this.properties = {
-      range: Object
+      range: Object,
+      scribe: Object
     };
   }
 

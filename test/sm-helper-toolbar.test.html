@@ -8,10 +8,18 @@
     <script src="../../test-fixture/test-fixture-mocha.js"></script>
     <link rel="import" href="../../test-fixture/test-fixture.html">
 
+    <!-- Use Simpla text for testing -->
+    <link rel="import" href="../../simpla-text/simpla-text.html">
+
     <!-- Import the element to test -->
     <link rel="import" href="../sm-helper-toolbar.html">
   </head>
   <body>
+    <test-fixture id="text">
+      <template>
+        <simpla-text></simpla-text>
+      </template>
+    </test-fixture>
     <test-fixture id="default">
       <template>
         <sm-helper-toolbar></sm-helper-toolbar>
@@ -20,10 +28,14 @@
     <script>
       describe('<sm-helper-toolbar>', function() {
 
-        var component;
+        var component,
+            text;
 
         beforeEach(function() {
           component = fixture('default');
+          text = fixture('text');
+
+          component.scribe = text.scribe;
         });
 
         it('is okay', function() {
@@ -54,6 +66,37 @@
             toolsTemplate.render();
 
             expect(component.$$('.tool#bold')).to.be.ok;
+          });
+
+          describe('bold, italic, underline', function() {
+            var fakeCommand,
+                getCommandStub,
+
+                // Commands
+                buttons = {};
+
+            beforeEach(function() {
+              fakeCommand = {
+                execute: sinon.spy()
+              };
+
+              getCommandStub = sinon.stub(component.scribe, 'getCommand').returns(fakeCommand);
+
+              toolsTemplate.render();
+              ['bold', 'italic', 'underline'].forEach(function(tool) {
+                buttons[tool] = component.$$('.tool#'+tool);
+              });
+            });
+
+            it('should call execute on corresponding scribe command', function() {
+              for (var tool in buttons) {
+                buttons[tool].click();
+                expect(getCommandStub.calledWith(tool), 'getCommand called with ' + tool).to.be.true;
+                expect(fakeCommand.execute.called, 'execute called for ' + tool).to.be.true;
+                fakeCommand.execute.reset();
+                getCommandStub.reset();
+              }
+            });
           });
         });
 

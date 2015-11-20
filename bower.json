@@ -27,7 +27,8 @@
   },
   "devDependencies": {
     "web-component-tester": "^3.3.0",
-    "test-fixture": "PolymerElements/test-fixture"
+    "test-fixture": "PolymerElements/test-fixture",
+    "simpla-text": "git@github.com:simplaio/simpla-text.git"
   },
   "componentImports": [
     "polymer/polymer.html",

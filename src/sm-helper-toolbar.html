@@ -6,7 +6,7 @@
     <!-- Action controls -->
     <!-- dummy <button> inside for Safari focus -->
     <template is="dom-repeat" id="tools" items="[[commands]]">
-      <sm-helper-button id="[[item]]" class="tool" icon="simpla:[[item]]">
+      <sm-helper-button id="[[item]]" class="tool" icon="simpla:[[item]]" on-tap="_handleToolTap">
         <button class="tool__target" aria-hidden="true"></button>
       </sm-helper-button>
     </template>
