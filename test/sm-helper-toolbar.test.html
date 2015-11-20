@@ -72,6 +72,23 @@
             expect(component.$$('.tool#bold')).to.be.ok;
           });
 
+          it('should use only commands specified by scribe instance', function() {
+            var usingLink;
+
+            // Dont use link
+            component.scribe._smEnabled = ['bold', 'italic', 'underline'];
+
+            // Do what the observer would normally do
+            component._checkUsedCommands(component.scribe, component.commands);
+
+            usingLink = component.commands.some(function(command) {
+              return command.name === 'link' && command.use;
+            });
+
+            expect(usingLink).to.be.false;
+
+          });
+
           describe('bold, italic, underline', function() {
             var fakeCommand,
                 getCommandStub,
