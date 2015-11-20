@@ -235,6 +235,20 @@
             });
           });
         });
+
+        describe('active / inactive', function() {
+          it('should become active when select is fired', function() {
+            component.active = false;
+            component.scribe.trigger('select');
+            expect(component.active).to.be.true;
+          });
+
+          it('should become inactive when deselect is fired', function() {
+            component.active = true;
+            component.scribe.trigger('deselect');
+            expect(component.active).to.be.false;
+          });
+        });
       });
     </script>
   </body>

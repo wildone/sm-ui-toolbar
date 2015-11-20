@@ -15,7 +15,8 @@ class SmHelperToolbar {
 
     this.observers = [
       '_loadPlugins(scribe)',
-      '_watchForRange(scribe)'
+      '_watchForRange(scribe)',
+      '_watchForActive(scribe)'
     ];
   }
 
@@ -39,6 +40,11 @@ class SmHelperToolbar {
         this.range = event.range;
       }
     });
+  }
+
+  _watchForActive(scribe) {
+    scribe.on('select', () => this.active = true);
+    scribe.on('deselect', () => this.active = false);
   }
 }
 
