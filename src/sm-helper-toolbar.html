@@ -5,8 +5,15 @@
 
     <!-- Action controls -->
     <!-- dummy <button> inside for Safari focus -->
-    <template is="dom-repeat" id="tools" items="[[commands]]">
-      <sm-helper-button id="[[item]]" class="tool" icon="simpla:[[item]]" on-tap="_handleToolTap">
+    <template is="dom-repeat" id="tools" items="[[commands]]" observe="use" filter="_usingCommand">
+      <sm-helper-button
+        id="[[item.name]]"
+        class="tool"
+        icon="simpla:[[item.name]]"
+        on-tap="_handleToolTap"
+        active="[[item.active]]"
+        disabled$="[[!item.enabled]]"
+      >
         <button class="tool__target" aria-hidden="true"></button>
       </sm-helper-button>
     </template>

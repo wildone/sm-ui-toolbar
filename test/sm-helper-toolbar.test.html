@@ -31,6 +31,10 @@
         var component,
             text;
 
+        function expandCommand(command) {
+          return { name: command, enabled: true, active: false, use: true };
+        }
+
         beforeEach(function() {
           component = fixture('default');
           text = fixture('text');
@@ -43,8 +47,8 @@
         });
 
         describe('commands', function() {
-          var defaultSet = ['bold', 'italic', 'underline', 'link'],
-              noBold = ['italic', 'underline', 'link'],
+          var defaultCommandNames = ['bold', 'italic', 'underline', 'link'],
+              defaultSet = defaultCommandNames.map(expandCommand),
               toolsTemplate;
 
           beforeEach(function() {
@@ -53,15 +57,15 @@
           });
 
           it('should hide commands that are disabled', function() {
-            component.set('commands', noBold);
+            component.set('commands.0.use', false);
             toolsTemplate.render();
 
             expect(component.$$('.tool#bold')).to.not.be.ok;
           });
 
           it('should show commands that are enabled', function() {
-            component.set('commands', noBold);
-            component.set('commands', defaultSet);
+            component.set('commands.0.use', false);
+            component.set('commands.0.use', true);
 
             toolsTemplate.render();
 
@@ -103,6 +107,58 @@
               innerButton.click();
               expect(getCommandStub.calledWith('bold')).to.be.true;
               expect(fakeCommand.execute.called).to.be.true;
+            });
+          });
+
+          describe('active / inactive', function() {
+            it('should set active on button when active is true on command', function() {
+              var firstButton;
+
+              component.set('commands.0.active', true);
+              toolsTemplate.render();
+
+              firstButton = Polymer.dom(component.root).querySelectorAll('.tool')[0];
+              expect(firstButton.active).to.be.true;
+            });
+
+            it('should update the tool based on scribe', function() {
+              // Test out on bold
+              var scribeCommand = component.scribe.getCommand('bold'),
+                  commandStub = sinon.stub(scribeCommand, 'queryState').returns(true);
+
+              // Ensure its disabled
+              component.set('commands.0.active', false);
+
+              // Fire off something to kick start it
+              component.scribe.trigger('selectionchange');
+
+              expect(component.commands[0].active).to.be.true;
+            });
+          });
+
+          describe('enabled / disabled', function() {
+            it('should set enabled attr on button when enabled is true on command', function() {
+              var firstButton;
+
+              component.set('commands.0.enabled', false);
+              toolsTemplate.render();
+
+              firstButton = Polymer.dom(component.root).querySelectorAll('.tool')[0];
+              expect(firstButton.hasAttribute('disabled')).to.be.true;
+            });
+
+            it('should update the tool based on scribe', function() {
+              // Test out on bold
+              var scribeCommand = component.scribe.getCommand('bold'),
+                  commandStub = sinon.stub(scribeCommand, 'queryEnabled').returns(true);
+
+              // Ensure its disabled
+              component.set('commands.0.enabled', false);
+
+              // Fire off something to kick start it
+              component.scribe.trigger('selectionchange');
+
+              expect(component.commands[0].enabled).to.be.true;
             });
           });
         });

@@ -1,13 +1,19 @@
-const DEFAULT_COMMANDS = ['bold', 'italic', 'underline', 'link'],
+let expandCommand = (name) => ({ name, enabled: true, active: false, use: true });
+
+const DEFAULT = ['bold', 'italic', 'underline', 'link'],
       STANDARD = ['bold', 'italic', 'underline'];
 
 export default {
   properties: {
     commands: {
       type: Array,
-      value: () => DEFAULT_COMMANDS.slice()
+      value: () => DEFAULT.map(expandCommand)
     }
   },
+
+  observers: [
+    '_watchCommandStatus(scribe, commands)'
+  ],
 
   execute(commandName, commandValue) {
     let scribe = this.scribe,
@@ -25,6 +31,10 @@ export default {
     command.execute(commandValue);
   },
 
+  _usingCommand(command) {
+    return command.use;
+  },
+
   _handleToolTap(event) {
     let tool = event.currentTarget,
         command = tool.id;
@@ -32,5 +42,27 @@ export default {
     if (STANDARD.indexOf(command) !== -1) {
       this.execute(command);
     }
+  },
+
+  _watchCommandStatus(scribe, commands) {
+    let updateCommands = () => {
+      commands
+        .map(({ name }) => scribe.getCommand(name))
+        
+        // Ensure is valid command
+        .filter(command => command && command.queryState && command.queryEnabled)
+
+        // Update enabled / active
+        .forEach((command, index) => {
+          let active = command.queryState(),
+              enabled = command.queryEnabled();
+
+          this.set(`commands.${index}.active`, active);
+          this.set(`commands.${index}.enabled`, enabled);
+        });
+    };
+
+    ['selectionchange', 'content-changed']
+      .forEach(event => scribe.on(event, updateCommands));
   }
 };
