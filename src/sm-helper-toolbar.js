@@ -1,5 +1,8 @@
 import commands from './behaviors/commands';
 import positioning from './behaviors/positioning';
+import selectionEvent from './plugins/selection-event.js';
+
+const PLUGINS = [selectionEvent];
 
 class SmHelperToolbar {
   beforeRegister() {
@@ -9,6 +12,10 @@ class SmHelperToolbar {
       range: Object,
       scribe: Object
     };
+
+    this.observers = [
+      '_loadPlugins(scribe)'
+    ];
   }
 
   get behaviors() {
@@ -19,6 +26,10 @@ class SmHelperToolbar {
       commands,
       positioning
     ];
+  }
+
+  _loadPlugins(scribe) {
+    PLUGINS.forEach(plugin => scribe.use(plugin));
   }
 }
 
