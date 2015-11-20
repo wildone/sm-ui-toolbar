@@ -8,18 +8,30 @@
       window.Polymer = window.Polymer || {};
       window.Polymer.dom = 'shadow';
     </script>
-    <link rel="import" href="../sm-helper-toolbar.html" />
+
+    <!-- For demonstration purposes -->
+    <link rel="import" href="/simpla-text/simpla-text.html" />
+
+    <!-- Toolbar -->
+    <link rel="import" href="/sm-helper-toolbar.html" />
   </head>
   <body>
     <template id="app" is="dom-bind">
       <h1>Standalone active toolbar</h1>
       <sm-helper-toolbar active position="[[defaultPosition]]"></sm-helper-toolbar>
+
+      <h1 style="margin-top: 80px;">Bound to a text element</h1>
+      <sm-helper-toolbar id="scribed" active scribe="[[scribe]]"></sm-helper-toolbar>
+      <simpla-text id="demoText" editable use-default><default-content><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, quis? Quis tempora ad commodi ex, pariatur optio. In beatae ipsa eius maxime voluptates, officia mollitia cupiditate doloremque reiciendis, ut doloribus!</p></default-content></simpla-text>
     </template>
 
     <script>
       var app = document.getElementById('app');
 
       app.addEventListener('dom-change', function() {
+        var text = app.$.demoText;
+        app.scribe = text.scribe;
+
         app.defaultPosition = {
           top: 75,
           left: 100
