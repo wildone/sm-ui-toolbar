@@ -97,6 +97,13 @@
                 getCommandStub.reset();
               }
             });
+
+            it('should call the handler even if event originates from within', function() {
+              var innerButton = buttons.bold.children[0];
+              innerButton.click();
+              expect(getCommandStub.calledWith('bold')).to.be.true;
+              expect(fakeCommand.execute.called).to.be.true;
+            });
           });
         });
 

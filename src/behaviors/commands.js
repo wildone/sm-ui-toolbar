@@ -26,7 +26,7 @@ export default {
   },
 
   _handleToolTap(event) {
-    let tool = event.target,
+    let tool = event.currentTarget,
         command = tool.id;
 
     if (STANDARD.indexOf(command) !== -1) {
