@@ -14,7 +14,8 @@ class SmHelperToolbar {
     };
 
     this.observers = [
-      '_loadPlugins(scribe)'
+      '_loadPlugins(scribe)',
+      '_watchForRange(scribe)'
     ];
   }
 
@@ -30,6 +31,14 @@ class SmHelperToolbar {
 
   _loadPlugins(scribe) {
     PLUGINS.forEach(plugin => scribe.use(plugin));
+  }
+
+  _watchForRange(scribe) {
+    scribe.on('selectionchange', (event) => {
+      if (event && event.range) {
+        this.range = event.range;
+      }
+    });
   }
 }
 

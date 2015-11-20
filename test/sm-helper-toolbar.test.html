@@ -224,6 +224,15 @@
               expect(component.position.left).to.equal(fakeToolbarPosition.left);
               expect(component.position.top).to.equal(fakeToolbarPosition.top);
             });
+
+            it('should be updated on scribe events', function() {
+              component.scribe.trigger('selectionchange', [{
+                position: null,
+                range: fakeRange
+              }]);
+
+              expect(component.range).to.equal(fakeRange);
+            });
           });
         });
       });
