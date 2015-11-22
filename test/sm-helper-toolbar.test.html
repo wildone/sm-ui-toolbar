@@ -127,6 +127,18 @@
             });
           });
 
+          describe('link', function() {
+            it('should be usingLink when link is set to true', function() {
+              component.set('commands.3.use', true);
+              expect(component._usingLink).to.be.true;
+            });
+
+            it('should be not usingLink when link is set to false', function() {
+              component.set('commands.3.use', false);
+              expect(component._usingLink).to.be.false;
+            });
+          });
+
           describe('active / inactive', function() {
             it('should set active on button when active is true on command', function() {
               var firstButton;

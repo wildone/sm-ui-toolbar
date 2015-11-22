@@ -8,6 +8,10 @@ export default {
     commands: {
       type: Array,
       value: () => DEFAULT.map(expandCommand)
+    },
+    _usingLink: {
+      type: Boolean,
+      computed: '_computeUsingLink(commands.*)'
     }
   },
 
@@ -76,5 +80,10 @@ export default {
         .map(isEnabled)
         .forEach(updateCommand);
     }
+  },
+
+  _computeUsingLink() {
+    return this.commands &&
+            this.commands.some( ({ name, use }) => name === 'link' && use );
   }
 };
