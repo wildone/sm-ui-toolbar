@@ -18,6 +18,13 @@
       </sm-helper-button>
     </template>
 
+    <template is="dom-if" if="[[_usingLink]]">
+      <div class="link" id="linkPrompt">
+        <input class="link__input" id="linkInput" type="text" name="link" placeholder="Type or paste a link" />
+        <sm-helper-button on-up="_clearLink" id="clear" class="link__clear" icon="simpla:cross"></sm-helper-button>
+      </div>
+    </template>
+
   </template>
   <script src="./sm-helper-toolbar.js"></script>
 </dom-module>
