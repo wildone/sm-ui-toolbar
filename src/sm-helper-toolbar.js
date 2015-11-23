@@ -1,8 +1,10 @@
 import commands from './behaviors/commands';
 import positioning from './behaviors/positioning';
 import selectionEvent from './plugins/selection-event.js';
+import createLinkCommand from './plugins/create-link.js';
+import unlinkCommand from 'scribe-plugin-intelligent-unlink-command';
 
-const PLUGINS = [selectionEvent];
+const PLUGINS = [selectionEvent, createLinkCommand, unlinkCommand];
 
 class SmHelperToolbar {
   beforeRegister() {

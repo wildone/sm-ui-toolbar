@@ -1,9 +1,17 @@
 import makeLinkPrompt from './link-prompt';
 
-let expandCommand = (name) => ({ name, enabled: true, active: false, use: true }),
+let iconFor = (command) => {
+      switch (command) {
+      case 'createLink':
+        return 'link';
+      default:
+        return command;
+      }
+    },
+    expandCommand = (name) => ({ name, enabled: true, active: false, use: true, icon: iconFor(name) }),
     upper = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
-const DEFAULT = ['bold', 'italic', 'underline', 'link'],
+const DEFAULT = ['bold', 'italic', 'underline', 'createLink'],
       STANDARD = ['bold', 'italic', 'underline'];
 
 export default [ makeLinkPrompt('_linkOpen'), {
@@ -40,7 +48,7 @@ export default [ makeLinkPrompt('_linkOpen'), {
     command.execute(commandValue);
   },
 
-  _executeLink() {
+  _executeCreateLink() {
     this._linkOpen = true;
   },
 
@@ -94,6 +102,6 @@ export default [ makeLinkPrompt('_linkOpen'), {
 
   _computeUsingLink() {
     return this.commands &&
-            this.commands.some( ({ name, use }) => name === 'link' && use );
+            this.commands.some( ({ name, use }) => name === 'createLink' && use );
   }
 }];

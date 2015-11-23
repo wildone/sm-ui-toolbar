@@ -64,7 +64,7 @@
         });
 
         describe('commands', function() {
-          var defaultCommandNames = ['bold', 'italic', 'underline', 'link'],
+          var defaultCommandNames = ['bold', 'italic', 'underline', 'createLink'],
               defaultSet = defaultCommandNames.map(expandCommand),
               toolsTemplate;
 
@@ -99,7 +99,7 @@
             component._checkUsedCommands(component.scribe, component.commands);
 
             usingLink = component.commands.some(function(command) {
-              return command.name === 'link' && command.use;
+              return command.name === 'createLink' && command.use;
             });
 
             expect(usingLink).to.be.false;
@@ -166,7 +166,7 @@
               };
               toolsTemplate.render();
 
-              component.$$('#link').click();
+              component.$$('#createLink').click();
               flushAnimations();
 
               expect(getLinkWidth()).to.be.above(0);
