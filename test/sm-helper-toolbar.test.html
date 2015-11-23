@@ -171,6 +171,29 @@
 
               expect(getLinkWidth()).to.be.above(0);
             });
+
+            it('should fill the input with current A tag href value', function() {
+              var dummyA = document.createElement('a'),
+                  dummyHref = 'http://google.com/';
+
+              dummyA.href = dummyHref;
+
+              sinon.stub(component.scribe.api, 'Selection', function() {
+                this.getContaining = function(callback) {
+                  var valid = callback(dummyA);
+
+                  if (valid) {
+                    return dummyA;
+                  }
+                };
+              });
+
+              component._linkOpen = false;
+              expect(component.$$('.link input').value).to.equal('');
+
+              component._linkOpen = true;
+              expect(component.$$('.link input').value).to.equal(dummyHref);
+            });
           });
 
           describe('active / inactive', function() {

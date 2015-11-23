@@ -12,7 +12,8 @@ let iconFor = (command) => {
     upper = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
 const DEFAULT = ['bold', 'italic', 'underline', 'createLink'],
-      STANDARD = ['bold', 'italic', 'underline'];
+      STANDARD = ['bold', 'italic', 'underline'],
+      LINK_TAG = 'A';
 
 export default [ makeLinkPrompt('_linkOpen'), {
   properties: {
@@ -24,12 +25,17 @@ export default [ makeLinkPrompt('_linkOpen'), {
       type: Boolean,
       computed: '_computeUsingLink(commands.*)'
     },
-    _linkOpen: Boolean
+    _linkOpen: Boolean,
+    _currentHref: {
+      type: String,
+      value: ''
+    }
   },
 
   observers: [
     '_watchCommandStatus(scribe, commands)',
-    '_checkUsedCommands(scribe, commands)'
+    '_checkUsedCommands(scribe, commands)',
+    '_updateCurrentHref(_linkOpen, scribe)'
   ],
 
   execute(commandName, commandValue) {
@@ -103,5 +109,16 @@ export default [ makeLinkPrompt('_linkOpen'), {
   _computeUsingLink() {
     return this.commands &&
             this.commands.some( ({ name, use }) => name === 'createLink' && use );
+  },
+
+  _updateCurrentHref(open, scribe) {
+    if (open) {
+      let selection = new scribe.api.Selection(),
+          node = selection.getContaining(node => node.nodeName === LINK_TAG);
+
+      if (node) {
+        this._currentHref = node.href;
+      }
+    }
   }
 }];
