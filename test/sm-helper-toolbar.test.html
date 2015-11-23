@@ -160,16 +160,24 @@
               expect(component._usingLink).to.be.false;
             });
 
-            it('should open the link prompt on click', function() {
-              var getLinkWidth = function() {
-                return parseFloat(window.getComputedStyle(component.$$('.link')).width);
-              };
+            it('should toggle the link prompt on click', function() {
+              var original,
+                  getLinkWidth = function() {
+                    return parseFloat(window.getComputedStyle(component.$$('.link')).width);
+                  };
+
               toolsTemplate.render();
+              original = getLinkWidth();
 
               component.$$('#createLink').click();
               flushAnimations();
 
-              expect(getLinkWidth()).to.be.above(0);
+              expect(getLinkWidth()).to.be.above(original);
+
+              component.$$('#createLink').click();
+              flushAnimations();
+
+              expect(getLinkWidth()).to.equal(original);
             });
 
             it('should fill the input with current A tag href value', function() {

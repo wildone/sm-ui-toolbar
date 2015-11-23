@@ -61,7 +61,7 @@ export default [ makeLinkPrompt('_linkOpen'), {
   },
 
   _executeCreateLink() {
-    this._linkOpen = true;
+    this._linkOpen = !this._linkOpen;
   },
 
   _usingCommand(command) {
