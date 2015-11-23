@@ -173,6 +173,8 @@
             });
 
             it('should fill the input with current A tag href value', function() {
+              toolsTemplate.render();
+
               var dummyA = document.createElement('a'),
                   dummyHref = 'http://google.com/';
 
@@ -193,6 +195,49 @@
 
               component._linkOpen = true;
               expect(component.$$('.link input').value).to.equal(dummyHref);
+            });
+
+            describe('unlinking', function() {
+              var dummyLink;
+
+              beforeEach(function() {
+                toolsTemplate.render();
+
+                var _getCommand = component.scribe.getCommand;
+
+                dummyUnlink = {
+                  execute: sinon.spy()
+                };
+
+                sinon.stub(component.scribe, 'getCommand', function(name) {
+                  return name === 'unlink' ? dummyUnlink : _getCommand.call(this, name);
+                });
+
+                component._linkOpen = true;
+                flushAnimations();
+              });
+
+              afterEach(function() {
+                component.scribe.getCommand.restore();
+              });
+
+              it('should be called when closing the link prompt and empty href', function() {
+                component._currentHref = '';
+
+                // Close it, triggering check of linkPrompt
+                component._linkOpen = false;
+
+                expect(dummyUnlink.execute.called).to.be.true;
+              });
+
+              it('should not be called when href is not empty', function() {
+                component._currentHref = 'http://simpla.io/';
+
+                // Close it, triggering check of linkPrompt
+                component._linkOpen = false;
+
+                expect(dummyUnlink.execute.called).to.be.false;
+              });
             });
           });
 

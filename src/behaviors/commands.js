@@ -1,5 +1,9 @@
 import makeLinkPrompt from './link-prompt';
 
+const DEFAULT = ['bold', 'italic', 'underline', 'createLink'],
+      STANDARD = ['bold', 'italic', 'underline'],
+      LINK_TAG = 'A';
+
 let iconFor = (command) => {
       switch (command) {
       case 'createLink':
@@ -9,11 +13,13 @@ let iconFor = (command) => {
       }
     },
     expandCommand = (name) => ({ name, enabled: true, active: false, use: true, icon: iconFor(name) }),
-    upper = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+    upper = (string) => string.charAt(0).toUpperCase() + string.slice(1),
+    getWrappingAnchor = (scribe) => {
+      let selection = new scribe.api.Selection(),
+          node = selection.getContaining(node => node.nodeName === LINK_TAG);
 
-const DEFAULT = ['bold', 'italic', 'underline', 'createLink'],
-      STANDARD = ['bold', 'italic', 'underline'],
-      LINK_TAG = 'A';
+      return node;
+    };
 
 export default [ makeLinkPrompt('_linkOpen'), {
   properties: {
@@ -35,7 +41,7 @@ export default [ makeLinkPrompt('_linkOpen'), {
   observers: [
     '_watchCommandStatus(scribe, commands)',
     '_checkUsedCommands(scribe, commands)',
-    '_updateCurrentHref(_linkOpen, scribe)'
+    '_manageLink(_linkOpen, scribe)'
   ],
 
   execute(commandName, commandValue) {
@@ -111,14 +117,12 @@ export default [ makeLinkPrompt('_linkOpen'), {
             this.commands.some( ({ name, use }) => name === 'createLink' && use );
   },
 
-  _updateCurrentHref(open, scribe) {
+  _manageLink(open, scribe) {
+    let node = getWrappingAnchor(scribe);
     if (open) {
-      let selection = new scribe.api.Selection(),
-          node = selection.getContaining(node => node.nodeName === LINK_TAG);
-
-      if (node) {
-        this._currentHref = node.href;
-      }
+      this._currentHref = node ? node.href : '';
+    } else if (this._currentHref.trim() === '') {
+      this.execute('unlink');
     }
   }
 }];
