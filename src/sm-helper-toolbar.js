@@ -21,13 +21,13 @@ class SmHelperToolbar {
   }
 
   get behaviors() {
-    return [
+    return [].concat(
       simpla.behaviors.active({
         reflectToAttribute: true
       }),
       commands,
       positioning
-    ];
+    );
   }
 
   _loadPlugins(scribe) {

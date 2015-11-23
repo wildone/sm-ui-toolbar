@@ -1,9 +1,12 @@
-let expandCommand = (name) => ({ name, enabled: true, active: false, use: true });
+import makeLinkPrompt from './link-prompt';
+
+let expandCommand = (name) => ({ name, enabled: true, active: false, use: true }),
+    upper = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
 const DEFAULT = ['bold', 'italic', 'underline', 'link'],
       STANDARD = ['bold', 'italic', 'underline'];
 
-export default {
+export default [ makeLinkPrompt('_linkOpen'), {
   properties: {
     commands: {
       type: Array,
@@ -12,7 +15,8 @@ export default {
     _usingLink: {
       type: Boolean,
       computed: '_computeUsingLink(commands.*)'
-    }
+    },
+    _linkOpen: Boolean
   },
 
   observers: [
@@ -36,6 +40,10 @@ export default {
     command.execute(commandValue);
   },
 
+  _executeLink() {
+    this._linkOpen = true;
+  },
+
   _usingCommand(command) {
     return command.use;
   },
@@ -46,6 +54,8 @@ export default {
 
     if (STANDARD.indexOf(command) !== -1) {
       this.execute(command);
+    } else {
+      this[`_execute${upper(command)}`]();
     }
   },
 
@@ -86,4 +96,4 @@ export default {
     return this.commands &&
             this.commands.some( ({ name, use }) => name === 'link' && use );
   }
-};
+}];

@@ -29,11 +29,28 @@
       describe('<sm-helper-toolbar>', function() {
 
         var component,
+            animations = [],
             text;
 
         function expandCommand(command) {
           return { name: command, enabled: true, active: false, use: true };
         }
+
+        // Override Animations
+        (function() {
+          var original = HTMLElement.prototype.animate;
+          HTMLElement.prototype.animate = function() {
+            var animation = original.apply(this, arguments);
+            animations.push(animation);
+            return animation;
+          };
+        })(animations);
+
+        function flushAnimations() {
+          animations.forEach(function(animation) {
+            animation.finish();
+          });
+        };
 
         beforeEach(function() {
           component = fixture('default');
@@ -128,6 +145,11 @@
           });
 
           describe('link', function() {
+
+            beforeEach(function() {
+              component.set('commands.3.use', true);
+            });
+
             it('should be usingLink when link is set to true', function() {
               component.set('commands.3.use', true);
               expect(component._usingLink).to.be.true;
@@ -136,6 +158,18 @@
             it('should be not usingLink when link is set to false', function() {
               component.set('commands.3.use', false);
               expect(component._usingLink).to.be.false;
+            });
+
+            it('should open the link prompt on click', function() {
+              var getLinkWidth = function() {
+                return parseFloat(window.getComputedStyle(component.$$('.link')).width);
+              };
+              toolsTemplate.render();
+
+              component.$$('#link').click();
+              flushAnimations();
+
+              expect(getLinkWidth()).to.be.above(0);
             });
           });
 
