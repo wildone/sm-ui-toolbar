@@ -2,7 +2,8 @@ import makeLinkPrompt from './link-prompt';
 
 const DEFAULT = ['bold', 'italic', 'underline', 'createLink'],
       STANDARD = ['bold', 'italic', 'underline'],
-      LINK_TAG = 'A';
+      LINK_TAG = 'A',
+      ENTER = 13;
 
 let iconFor = (command) => {
       switch (command) {
@@ -133,6 +134,12 @@ export default [ makeLinkPrompt('_linkOpen'), {
       this.execute('unlink');
     } else {
       this.execute('createLink', this._currentHref);
+    }
+  },
+
+  _checkForEnter(event) {
+    if (event.keyCode === ENTER) {
+      this._linkOpen = false;
     }
   }
 }];

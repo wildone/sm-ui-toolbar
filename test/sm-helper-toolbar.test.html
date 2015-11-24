@@ -228,6 +228,17 @@
               expect(component.$$('.link input').value).to.equal(dummyHref);
             });
 
+            it('should close the prompt on enter', function() {
+              toolsTemplate.render();
+              component._linkOpen = true;
+
+              var dummyEnter = new Event('keyup');
+              dummyEnter.keyCode = 13;
+
+              component.$$('.link input').dispatchEvent(dummyEnter);
+              expect(component._linkOpen).to.be.false;
+            });
+
             describe('unlinking / linking', function() {
               var dummyLink,
                   dummyUnlink,
