@@ -22,7 +22,7 @@
     </test-fixture>
     <test-fixture id="default">
       <template>
-        <sm-helper-toolbar></sm-helper-toolbar>
+        <sm-helper-toolbar active></sm-helper-toolbar>
       </template>
     </test-fixture>
     <script>
@@ -236,6 +236,14 @@
               dummyEnter.keyCode = 13;
 
               component.$$('.link input').dispatchEvent(dummyEnter);
+              expect(component._linkOpen).to.be.false;
+            });
+
+            it('should close the prompt when inactive', function() {
+              component._linkOpen = true;
+              component.active = true;
+
+              component.active = false;
               expect(component._linkOpen).to.be.false;
             });
 

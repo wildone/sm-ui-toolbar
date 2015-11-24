@@ -42,7 +42,8 @@ export default [ makeLinkPrompt('_linkOpen'), {
   observers: [
     '_watchCommandStatus(scribe, commands)',
     '_checkUsedCommands(scribe, commands)',
-    '_manageLink(_linkOpen, scribe)'
+    '_manageLink(_linkOpen, scribe)',
+    '_closeLink(active, _linkOpen)'
   ],
 
   execute(commandName, commandValue) {
@@ -146,5 +147,11 @@ export default [ makeLinkPrompt('_linkOpen'), {
   _clearLink() {
     this._currentHref = '';
     this._linkOpen = false;
+  },
+
+  _closeLink(active, open) {
+    if (!active && open) {
+      this._linkOpen = false;
+    }
   }
 }];
