@@ -141,5 +141,10 @@ export default [ makeLinkPrompt('_linkOpen'), {
     if (event.keyCode === ENTER) {
       this._linkOpen = false;
     }
+  },
+
+  _clearLink() {
+    this._currentHref = '';
+    this._linkOpen = false;
   }
 }];

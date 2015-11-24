@@ -239,6 +239,16 @@
               expect(component._linkOpen).to.be.false;
             });
 
+            it('should clear and close prompt on exit click', function() {
+              toolsTemplate.render();
+              component._linkOpen = true;
+              component._currentHref = 'somehref';
+
+              component.$$('.link sm-helper-button').click();
+              expect(component._linkOpen).to.be.false;
+              expect(component._currentHref).to.equal('');
+            });
+
             describe('unlinking / linking', function() {
               var dummyLink,
                   dummyUnlink,
