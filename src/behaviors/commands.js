@@ -123,6 +123,8 @@ export default [ makeLinkPrompt('_linkOpen'), {
       this._currentHref = node ? node.href : '';
     } else if (this._currentHref.trim() === '') {
       this.execute('unlink');
+    } else {
+      this.execute('createLink', this._currentHref);
     }
   }
 }];

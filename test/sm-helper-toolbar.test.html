@@ -205,8 +205,10 @@
               expect(component.$$('.link input').value).to.equal(dummyHref);
             });
 
-            describe('unlinking', function() {
-              var dummyLink;
+            describe('unlinking / linking', function() {
+              var dummyLink,
+                  dummyUnlink,
+                  href = 'http://simpla.io/';
 
               beforeEach(function() {
                 toolsTemplate.render();
@@ -217,8 +219,19 @@
                   execute: sinon.spy()
                 };
 
+                dummyLink = {
+                  execute: sinon.spy()
+                };
+
                 sinon.stub(component.scribe, 'getCommand', function(name) {
-                  return name === 'unlink' ? dummyUnlink : _getCommand.call(this, name);
+                  switch (name) {
+                  case 'unlink':
+                    return dummyUnlink;
+                  case 'createLink':
+                    return dummyLink;
+                  default:
+                    return _getCommand.call(this, name);
+                  }
                 });
 
                 component._linkOpen = true;
@@ -229,22 +242,40 @@
                 component.scribe.getCommand.restore();
               });
 
-              it('should be called when closing the link prompt and empty href', function() {
-                component._currentHref = '';
+              describe('unlinking', function() {
+                it('should be called when closing the link prompt and empty href', function() {
+                  component._currentHref = '';
 
-                // Close it, triggering check of linkPrompt
-                component._linkOpen = false;
+                  // Close it, triggering check of linkPrompt
+                  component._linkOpen = false;
 
-                expect(dummyUnlink.execute.called).to.be.true;
+                  expect(dummyUnlink.execute.called).to.be.true;
+                });
+
+                it('should not be called when href is not empty', function() {
+                  component._currentHref = href;
+
+                  // Close it, triggering check of linkPrompt
+                  component._linkOpen = false;
+
+                  expect(dummyUnlink.execute.called).to.be.false;
+                });
               });
 
-              it('should not be called when href is not empty', function() {
-                component._currentHref = 'http://simpla.io/';
+              describe('linking', function() {
+                it('should be called when closing the link prompt and not empty href', function() {
+                  component._currentHref = href;
+                  component._linkOpen = false;
 
-                // Close it, triggering check of linkPrompt
-                component._linkOpen = false;
+                  expect(dummyLink.execute.calledWith(href)).to.be.true;
+                });
 
-                expect(dummyUnlink.execute.called).to.be.false;
+                it('should not be called when closing the link prompt and empty href', function() {
+                  component._currentHref = '';
+                  component._linkOpen = false;
+
+                  expect(dummyLink.execute.called).to.not.be.true;
+                });
               });
             });
           });
