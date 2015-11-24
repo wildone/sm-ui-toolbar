@@ -46,6 +46,7 @@ export default [ makeLinkPrompt('_linkOpen'), {
 
   execute(commandName, commandValue) {
     let scribe = this.scribe,
+        selected = new scribe.api.Selection(),
         command;
 
     if (!scribe) {
@@ -57,6 +58,13 @@ export default [ makeLinkPrompt('_linkOpen'), {
     // Restore focus,
     // See https://github.com/guardian/scribe-plugin-toolbar/blob/master/src/scribe-plugin-toolbar.js#L21
     scribe.el.focus();
+
+    // Check ranges are equal, and restore if not
+    if (this.range !== selected.range) {
+      selected.selection.removeAllRanges();
+      selected.selection.addRange(this.range);
+    }
+
     command.execute(commandValue);
   },
 

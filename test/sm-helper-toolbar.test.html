@@ -106,6 +106,29 @@
 
           });
 
+          it('should restore the current range before executing commands', function() {
+            // This accounts for when selection on the current range has been
+            //  lost due to focus loss e.g. input typing
+            // TODO: Ideally this should be testing the underlying behavior,
+            // e.g. select some text, focus away, perform execute, then check
+            // to see if it worked
+
+            var dummyRange = document.createRange(),
+                sameStart = false,
+                sameEnd = false,
+                foundRange;
+
+            component.range = dummyRange;
+            component.execute('bold');
+
+            foundRange = (new component.scribe.api.Selection()).selection.getRangeAt(0);
+
+            sameStart = dummyRange.compareBoundaryPoints(Range.START_TO_START, foundRange) === 0;
+            sameEnd = dummyRange.compareBoundaryPoints(Range.END_TO_END, foundRange) === 0;
+
+            expect(sameStart && sameEnd).to.be.true;
+          });
+
           describe('bold, italic, underline', function() {
             var fakeCommand,
                 getCommandStub,
