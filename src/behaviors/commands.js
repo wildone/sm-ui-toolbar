@@ -47,7 +47,8 @@ export default [ makeLinkPrompt('_linkOpen'), {
   ],
 
   execute(commandName, commandValue) {
-    let scribe = this.scribe,
+    let wasInactive = !this.active,
+        scribe = this.scribe,
         selected = new scribe.api.Selection(),
         command;
 
@@ -68,6 +69,11 @@ export default [ makeLinkPrompt('_linkOpen'), {
     }
 
     command.execute(commandValue);
+
+    if (wasInactive) {
+      scribe.el.blur();
+      selected.selection.removeAllRanges();
+    }
   },
 
   _executeCreateLink() {

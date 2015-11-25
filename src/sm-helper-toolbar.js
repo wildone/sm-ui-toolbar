@@ -18,8 +18,13 @@ class SmHelperToolbar {
     this.observers = [
       '_loadPlugins(scribe)',
       '_watchForRange(scribe)',
-      '_watchForActive(scribe)'
+      '_watchForActive(scribe)',
+      '_toggleWindowListener(active)'
     ];
+
+    this.listeners = {
+      'click': '_protectClick'
+    }
   }
 
   get behaviors() {
@@ -47,6 +52,24 @@ class SmHelperToolbar {
   _watchForActive(scribe) {
     scribe.on('select', () => this.active = true);
     scribe.on('deselect', () => this.active = false);
+  }
+
+  _toggleWindowListener(active) {
+    if (active) {
+      this._windowListener = (ev) => {
+        if (!ev._protected) {
+          this.active = false;
+        }
+      };
+      window.addEventListener('click', this._windowListener);
+    } else if (this._windowListener) {
+      window.removeEventListener('click', this._windowListener);
+      this._windowListener = null;
+    }
+  }
+
+  _protectClick(event) {
+    event._protected = true;
   }
 }
 

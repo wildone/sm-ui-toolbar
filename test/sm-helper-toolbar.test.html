@@ -29,6 +29,7 @@
       describe('<sm-helper-toolbar>', function() {
 
         var component,
+            toolsTemplate,
             animations = [],
             text;
 
@@ -57,6 +58,7 @@
           text = fixture('text');
 
           component.scribe = text.scribe;
+          toolsTemplate = component.$.tools;
         });
 
         it('is okay', function() {
@@ -65,12 +67,10 @@
 
         describe('commands', function() {
           var defaultCommandNames = ['bold', 'italic', 'underline', 'createLink'],
-              defaultSet = defaultCommandNames.map(expandCommand),
-              toolsTemplate;
+              defaultSet = defaultCommandNames.map(expandCommand);
 
           beforeEach(function() {
             component.set('commands', defaultSet);
-            toolsTemplate = component.$.tools;
           });
 
           it('should hide commands that are disabled', function() {
@@ -117,6 +117,9 @@
                 sameStart = false,
                 sameEnd = false,
                 foundRange;
+
+            // Prevent from making it become inactive
+            Object.defineProperty(dummyRange, 'collapsed', { value: false });
 
             component.range = dummyRange;
             component.execute('bold');
@@ -171,6 +174,7 @@
 
             beforeEach(function() {
               component.set('commands.3.use', true);
+              toolsTemplate.render();
             });
 
             it('should be usingLink when link is set to true', function() {
@@ -469,6 +473,23 @@
             component.active = true;
             component.scribe.trigger('deselect');
             expect(component.active).to.be.false;
+          });
+
+          it('should become inactive clicking outside toolbar', function() {
+            component.active = true;
+
+            // TODO: This should be replaced by an actually click on body or somewhere
+            //  but it seems doing so triggers old leftover functions that then
+            //  point to detached toolbars and cause's all kinds of havoc
+            component._windowListener(new MouseEvent('click'));
+
+            expect(component.active).to.be.false;
+          });
+
+          it('should not go inactive if click originated from toolbar', function() {
+            component.active = true;
+            component.click();
+            expect(component.active).to.be.true;
           });
         });
       });
