@@ -20,6 +20,11 @@
         <simpla-text></simpla-text>
       </template>
     </test-fixture>
+    <test-fixture id="alternate-text">
+      <template>
+        <simpla-text></simpla-text>
+      </template>
+    </test-fixture>
     <test-fixture id="default">
       <template>
         <sm-helper-toolbar active></sm-helper-toolbar>
@@ -31,7 +36,8 @@
         var component,
             toolsTemplate,
             animations = [],
-            text;
+            text,
+            alternateText;
 
         function expandCommand(command) {
           return { name: command, enabled: true, active: false, use: true };
@@ -56,7 +62,9 @@
         beforeEach(function() {
           component = fixture('default');
           text = fixture('text');
+          alternateText = fixture('alternate-text');
 
+          component.use(text.scribe);
           component.scribe = text.scribe;
           toolsTemplate = component.$.tools;
         });
@@ -489,6 +497,24 @@
           it('should not go inactive if click originated from toolbar', function() {
             component.active = true;
             component.click();
+            expect(component.active).to.be.true;
+          });
+        });
+
+        describe('scribe', function() {
+          it('should be able to use scribe and enable as needed', function() {
+            var scribeA = text.scribe,
+                scribeB = alternateText.scribe;
+
+            component.use(scribeA);
+            component.use(scribeB);
+
+            scribeA.trigger('select');
+            expect(component.scribe).to.equal(scribeA);
+            expect(component.active).to.be.true;
+
+            scribeB.trigger('select');
+            expect(component.scribe).to.equal(scribeB);
             expect(component.active).to.be.true;
           });
         });

@@ -37,11 +37,16 @@ class SmHelperToolbar {
     );
   }
 
-  _loadPlugins(scribe) {
-    PLUGINS.forEach(plugin => scribe.use(plugin));
-  }
+  use(scribe) {
+    scribe.on('select', () => {
+      this.scribe = scribe;
+      this.active = true;
+    });
 
-  _watchForRange(scribe) {
+    scribe.on('deselect', () => this.active = false);
+
+    PLUGINS.forEach(plugin => scribe.use(plugin));
+
     scribe.on('selectionchange', (event) => {
       if (event && event.range) {
         this.range = event.range;
@@ -49,9 +54,16 @@ class SmHelperToolbar {
     });
   }
 
+  _loadPlugins(scribe) {
+
+  }
+
+  _watchForRange(scribe) {
+
+  }
+
   _watchForActive(scribe) {
-    scribe.on('select', () => this.active = true);
-    scribe.on('deselect', () => this.active = false);
+
   }
 
   _toggleWindowListener(active) {
