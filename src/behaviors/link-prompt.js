@@ -1,6 +1,6 @@
-const PROMPT_WIDTH = '280px',
-      easings = simpla.constants.easings,
-      opts = {
+const easings = simpla.constants.easings,
+      PROMPT_WIDTH = '280px',
+      OPTIONS = {
         easing: easings.easeOutCubic,
         fill: 'both',
         duration: 180
@@ -28,13 +28,13 @@ export default function(observable) {
           target: tools[0],
           begin: { 'margin-left': 0 },
           end: { 'margin-left': '-' + offset },
-          options: opts
+          options: OPTIONS
         },
         {
           target: input,
           begin: { 'width': 0 },
           end: { 'width': PROMPT_WIDTH },
-          options: opts
+          options: OPTIONS
         }
       ]},
 
