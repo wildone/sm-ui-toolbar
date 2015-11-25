@@ -32,7 +32,11 @@ export default {
   },
 
   _offsetsChanged() {
-    this.style.transform = `translate(${this._translateX}, ${this._translateY})`;
+    let translation = `translate(${this._translateX}, ${this._translateY})`;
+
+    this.style.transform = translation;
+    this.style.webkitTransform = translation;
+    this.style.msTransform = translation;
   },
 
   _updateOffsets(range) {
