@@ -34,7 +34,7 @@
 	color: var(--blue);
 }
 
-.tool.disabled {
+.tool[disabled] {
   pointer-events: none;
   color: var(--gray);
 }
