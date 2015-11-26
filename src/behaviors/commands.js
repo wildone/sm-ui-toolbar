@@ -42,7 +42,7 @@ export default [ makeLinkPrompt('_linkOpen'), {
   observers: [
     '_watchCommandStatus(scribe, commands)',
     '_checkUsedCommands(scribe, commands)',
-    '_manageLink(_linkOpen, scribe)',
+    '_manageLink(_linkOpen)',
     '_closeLink(active, _linkOpen)'
   ],
 
@@ -131,14 +131,23 @@ export default [ makeLinkPrompt('_linkOpen'), {
             this.commands.some( ({ name, use }) => name === 'createLink' && use );
   },
 
-  _manageLink(open, scribe) {
-    let node = getWrappingAnchor(scribe);
+  _manageLink(open) {
+    let scribe = this.scribe,
+        node;
+
+    if (!scribe) {
+      return;
+    }
+
+    node = getWrappingAnchor(scribe);
+
     if (open) {
       this._currentHref = node ? node.href : '';
     } else if (this._currentHref.trim() === '') {
       this.execute('unlink');
     } else {
       this.execute('createLink', this._currentHref);
+      this._currentHref = '';
     }
   },
 
