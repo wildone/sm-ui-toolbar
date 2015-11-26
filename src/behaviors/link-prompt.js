@@ -27,7 +27,7 @@ export default function(observable) {
         {
           target: tools[0],
           begin: { 'margin-left': 0 },
-          end: { 'margin-left': '-' + offset },
+          end: { 'margin-left': '-' + `${offset}px` },
           options: OPTIONS
         },
         {
