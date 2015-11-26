@@ -118,14 +118,12 @@ export default [ makeLinkPrompt('_linkOpen'), {
   },
 
   _checkUsedCommands(scribe, commands) {
-    let isEnabled = ({ name }) => scribe._smEnabled.indexOf(name) !== -1,
+    let isEnabled = ({ name }) => !scribe._smEnabled || scribe._smEnabled.indexOf(name) !== -1,
         updateCommand = (enabled, index) => this.set(`commands.${index}.use`, enabled);
 
-    if (scribe._smEnabled) {
-      commands
-        .map(isEnabled)
-        .forEach(updateCommand);
-    }
+    commands
+      .map(isEnabled)
+      .forEach(updateCommand);
   },
 
   _computeUsingLink() {

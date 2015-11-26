@@ -114,6 +114,22 @@
 
           });
 
+          it('should use all commands even when smEnabled is null', function() {
+            var usingAll;
+
+            // Dont specify any commands
+            component.scribe._smEnabled = null;
+            component.set('commands.0.use', false);
+
+            component._checkUsedCommands(component.scribe, component.commands);
+
+            usingAll = component.commands.every(function(command) {
+              return command.use;
+            });
+
+            expect(usingAll).to.be.true;
+          });
+
           it('should restore the current range before executing commands', function() {
             // This accounts for when selection on the current range has been
             //  lost due to focus loss e.g. input typing
@@ -347,7 +363,7 @@
                   sinon.stub(prompt, 'focus', function() {
                     done();
                   });
-                  
+
                   component._linkOpen = true;
                   flushAnimations();
                 });
