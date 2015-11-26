@@ -340,6 +340,17 @@
 
                   expect(dummyLink.execute.called).to.not.be.true;
                 });
+
+                it('should focus on the input after opening', function(done) {
+                  var prompt = component.$$('.link__input');
+
+                  sinon.stub(prompt, 'focus', function() {
+                    done();
+                  });
+                  
+                  component._linkOpen = true;
+                  flushAnimations();
+                });
               });
             });
           });

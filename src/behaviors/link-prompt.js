@@ -1,4 +1,7 @@
 const easings = simpla.constants.easings,
+      TOOLS = '.tool',
+      PROMPT = '.link',
+      INPUT = '.link__input',
       PROMPT_WIDTH = '280px',
       OPTIONS = {
         easing: easings.easeOutCubic,
@@ -19,31 +22,41 @@ export default function(observable) {
     ],
 
     get _linkAnimations() {
-      let tools = [].slice.call(Polymer.dom(this.root).querySelectorAll('.tool')),
-          input = this.$$('.link'),
+      let tools = [].slice.call(Polymer.dom(this.root).querySelectorAll(TOOLS)),
+          prompt = this.$$(PROMPT),
           offset = tools[0].offsetWidth * (tools.length - 1);
 
-      return [
-        {
+      return {
+        tools: {
           target: tools[0],
-          begin: { 'margin-left': 0 },
-          end: { 'margin-left': '-' + `${offset}px` },
-          options: OPTIONS
+          frames: [
+            { 'margin-left': 0 },
+            { 'margin-left': '-' + `${offset}px` }
+          ]
         },
-        {
-          target: input,
-          begin: { 'width': 0 },
-          end: { 'width': PROMPT_WIDTH },
-          options: OPTIONS
+        input: {
+          target: prompt,
+          frames: [
+            { 'width': 0 },
+            { 'width': PROMPT_WIDTH }
+          ]
         }
-      ]},
+      }
+    },
 
     _toggleLinkPrompt(direction) {
+      let { tools, input } = this._linkAnimations,
+          linkPrompt = this.$$(INPUT),
+          inputAnimation;
 
-      this._linkAnimations.forEach(({ target, begin, end, options }) => {
-        let frames = direction === 'open' ? [begin, end] : [end, begin];
-        target.animate(frames, options);
-      });
+      if (direction === 'open') {
+        tools.target.animate(tools.frames, OPTIONS);
+        inputAnimation = input.target.animate(input.frames, OPTIONS);
+        inputAnimation.onfinish = () => linkPrompt.focus();
+      } else {
+        tools.target.animate(tools.frames.reverse(), OPTIONS);
+        input.target.animate(input.frames.reverse(), OPTIONS);
+      }
 
     },
 
