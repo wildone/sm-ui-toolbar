@@ -21,7 +21,7 @@
     <template is="dom-if" if="[[_usingLink]]">
       <div class="link">
         <input class="link__input" type="text" name="link" value="{{_currentHref::input}}" on-keyup="_checkForEnter" placeholder="Type or paste a link" />
-        <sm-helper-button on-tap="_clearLink" class="link__clear" icon="simpla:cross"></sm-helper-button>
+        <sm-helper-button on-tap="_clearAndCloseLink" class="link__clear" icon="simpla:cross"></sm-helper-button>
       </div>
     </template>
 

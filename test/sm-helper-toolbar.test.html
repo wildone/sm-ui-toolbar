@@ -529,10 +529,15 @@
         });
 
         describe('scribe', function() {
-          it('should be able to use scribe and enable as needed', function() {
-            var scribeA = text.scribe,
-                scribeB = alternateText.scribe;
+          var scribeA,
+              scribeB;
 
+          beforeEach(function() {
+            scribeA = text.scribe;
+            scribeB = alternateText.scribe;
+          });
+
+          it('should be able to use scribe and enable as needed', function() {
             component.use(scribeA);
             component.use(scribeB);
 
@@ -543,6 +548,14 @@
             scribeB.trigger('select');
             expect(component.scribe).to.equal(scribeB);
             expect(component.active).to.be.true;
+          });
+
+          it('should clear the link when changing', function() {
+            component.scribe = scribeA;
+            component._currentHref = 'http://google.com/';
+
+            component.scribe = scribeB;
+            expect(component._currentHref).to.equal('');
           });
         });
       });
