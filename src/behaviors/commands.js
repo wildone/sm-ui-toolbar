@@ -74,6 +74,10 @@ export default [ makeLinkPrompt('_linkOpen'), {
     if (wasInactive) {
       scribe.el.blur();
       selected.selection.removeAllRanges();
+      // Restore the range to what it was before
+      if (this.range !== selected.range) {
+        selected.selection.addRange(selected.range);
+      }
     }
   },
 
@@ -144,11 +148,24 @@ export default [ makeLinkPrompt('_linkOpen'), {
 
     if (open) {
       this._currentHref = node ? node.href : '';
+
+      // Save range for when closing the prompt
+      this._prePromptRange = this.range;
     } else if (this._currentHref.trim() === '') {
       this.execute('unlink');
     } else {
+
+      // Temporarily store range
+      let currentRange = this.range;
+      this.range = this._prePromptRange;
+
       this.execute('createLink', this._currentHref);
-      this._currentHref = '';
+
+      // Link has been used, clear it
+      this._clearLink();
+
+      // Return range to before linking started
+      this.range = currentRange;
     }
   },
 
