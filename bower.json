@@ -22,7 +22,7 @@
   "dependencies": {
     "webcomponentsjs": "^0.7.0",
     "polymer": "^1.2.0",
-    "simpla": "git@github.com:simplaio/simpla.git",
+    "simpla-core": "git@github.com:simplaio/simpla-core.git",
     "sm-helper-button": "git@github.com:simplaio/sm-helper-button.git"
   },
   "devDependencies": {
@@ -32,7 +32,7 @@
   },
   "componentImports": [
     "polymer/polymer.html",
-    "simpla/simpla.html",
+    "simpla-core/simpla-core.html",
     "sm-helper-button/sm-helper-button.html"
   ]
 }
