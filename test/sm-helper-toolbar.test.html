@@ -280,7 +280,7 @@
               component._linkOpen = true;
               component._currentHref = 'somehref';
 
-              component.$$('.link sm-helper-button').click();
+              component.$$('.link__clear').click();
               expect(component._linkOpen).to.be.false;
               expect(component._currentHref).to.equal('');
             });
