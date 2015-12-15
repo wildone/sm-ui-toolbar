@@ -6,7 +6,7 @@
     <!-- Action controls -->
     <!-- dummy <button> inside for Safari focus -->
     <template is="dom-repeat" id="tools" items="[[commands]]" observe="use" filter="_usingCommand">
-      <sm-helper-button
+      <sm-ui-button
         id="[[item.name]]"
         class="tool"
         icon="simpla:[[item.icon]]"
@@ -15,13 +15,13 @@
         disabled$="[[!item.enabled]]"
       >
         <button class="tool__target" aria-hidden="true"></button>
-      </sm-helper-button>
+      </sm-ui-button>
     </template>
 
     <template is="dom-if" if="[[_usingLink]]">
       <div class="link">
         <input class="link__input" type="text" name="link" value="{{_currentHref::input}}" on-keyup="_checkForEnter" placeholder="Type or paste a link" />
-        <sm-helper-button on-tap="_clearAndCloseLink" class="link__clear" icon="simpla:cross"></sm-helper-button>
+        <sm-ui-button on-tap="_clearAndCloseLink" class="link__clear" icon="simpla:cross"></sm-ui-button>
       </div>
     </template>
 
