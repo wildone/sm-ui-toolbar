@@ -6,9 +6,9 @@ import unlinkCommand from 'scribe-plugin-intelligent-unlink-command';
 
 const PLUGINS = [selectionEvent, createLinkCommand, unlinkCommand];
 
-class SmHelperToolbar {
+class SmUiToolbar {
   beforeRegister() {
-    this.is = 'sm-helper-toolbar';
+    this.is = 'sm-ui-toolbar';
 
     this.properties = {
       range: Object,
@@ -85,4 +85,4 @@ class SmHelperToolbar {
   }
 }
 
-Polymer(SmHelperToolbar);
+Polymer(SmUiToolbar);

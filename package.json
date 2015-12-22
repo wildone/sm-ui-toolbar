@@ -1,8 +1,8 @@
 {
-  "name": "sm-helper-toolbar",
+  "name": "sm-ui-toolbar",
   "version": "0.0.0",
   "description": "Toolbar to control a Scribe instance",
-  "main": "sm-helper-toolbar.html",
+  "main": "sm-ui-toolbar.html",
   "scripts": {
     "test": "gulp test:local"
   },
@@ -16,10 +16,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/simplaio/sm-helper-toolbar.git"
+    "url": "https://github.com/simplaio/sm-ui-toolbar.git"
   },
   "bugs": {
-    "url": "https://github.com/simplaio/sm-helper-toolbar/issues"
+    "url": "https://github.com/simplaio/sm-ui-toolbar/issues"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.0",

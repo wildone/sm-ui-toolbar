@@ -1,4 +1,4 @@
-# helper toolbar
+# UI toolbar
 
 Toolbar to control a Scribe instance
 

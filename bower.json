@@ -1,12 +1,12 @@
 {
-  "name": "sm-helper-toolbar",
+  "name": "sm-ui-toolbar",
   "description": "Toolbar to control a Scribe instance",
   "version": "0.0.0",
   "authors": [
     "Simpla <admin@simpla.io>"
   ],
   "license": "MIT",
-  "main": "sm-helper-toolbar.html",
+  "main": "sm-ui-toolbar.html",
   "keywords": [
     "simpla",
     "web component",
@@ -16,7 +16,7 @@
   "ignore": [
     "*",
     "!src/**/*",
-    "!sm-helper-toolbar.html",
+    "!sm-ui-toolbar.html",
     "!LICENSE"
   ],
   "dependencies": {

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>sm-helper-toolbar</title>
+    <title>sm-ui-toolbar</title>
     <script src="../../webcomponentsjs/webcomponents.min.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
     <script src="../../test-fixture/test-fixture-mocha.js"></script>
@@ -12,7 +12,7 @@
     <link rel="import" href="../../simpla-text/simpla-text.html">
 
     <!-- Import the element to test -->
-    <link rel="import" href="../sm-helper-toolbar.html">
+    <link rel="import" href="../sm-ui-toolbar.html">
   </head>
   <body>
     <test-fixture id="text">
@@ -27,11 +27,11 @@
     </test-fixture>
     <test-fixture id="default">
       <template>
-        <sm-helper-toolbar active></sm-helper-toolbar>
+        <sm-ui-toolbar active></sm-ui-toolbar>
       </template>
     </test-fixture>
     <script>
-      describe('<sm-helper-toolbar>', function() {
+      describe('<sm-ui-toolbar>', function() {
 
         var component,
             toolsTemplate,
