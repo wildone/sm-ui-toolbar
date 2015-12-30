@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>sm-helper-toolbar</title>
+    <title>sm-ui-toolbar</title>
     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <script>
       window.Polymer = window.Polymer || {};
@@ -13,14 +13,14 @@
     <link rel="import" href="/simpla-text/simpla-text.html" />
 
     <!-- Toolbar -->
-    <link rel="import" href="/sm-helper-toolbar.html" />
+    <link rel="import" href="/sm-ui-toolbar.html" />
   </head>
   <body>
     <template id="app" is="dom-bind">
       <h1>Standalone active toolbar</h1>
-      <sm-helper-toolbar active position="[[defaultPosition]]"></sm-helper-toolbar>
+      <sm-ui-toolbar active position="[[defaultPosition]]"></sm-ui-toolbar>
 
-      <sm-helper-toolbar id="scribed"></sm-helper-toolbar>
+      <sm-ui-toolbar id="scribed"></sm-ui-toolbar>
 
       <h1 style="margin-top: 80px;">Bound to a text element</h1>
       <simpla-text class="demo-text" editable use-default _toolbar="[[toolbar]]"><default-content><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, quis? Quis tempora ad commodi ex, pariatur optio. In beatae ipsa eius maxime voluptates, officia mollitia cupiditate doloremque reiciendis, ut doloribus!</p></default-content></simpla-text>
