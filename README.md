@@ -1,4 +1,4 @@
-# UI toolbar
+# UI Toolbar
 ![][bower-badge] [![][travis-badge]][travis-url] [![][bowerdeps-badge]][bowerdeps-url] [![][npmdevdeps-badge]][npmdevdeps-url]
 
 Toolbar to control a Simpla textual elements
