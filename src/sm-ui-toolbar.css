@@ -39,19 +39,6 @@
   color: var(--gray);
 }
 
-/* Dummy <button> to retain focus */
-.tool__target {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  opacity: 0;
-  speak: none;
-  cursor: pointer;
-}
-
 /* Active highlights */
 .tool::after {
   content: '';

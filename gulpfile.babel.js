@@ -57,7 +57,7 @@ const imports = componentImports.map(dep => `../${dep}`),
 wct.gulp.init(gulp);
 
 gulp.task('process', () => {
-  return gulp.src(['src/**/*.{html,js,css}', 'src/*.{html,js,css}'])
+  return gulp.src(['src/*.{html,js,css}'])
           .pipe(errorNotifier())
             .pipe(gulpif('*.js', named(file => {
               let name = path.basename(file.path, path.extname(file.path)),
@@ -77,7 +77,7 @@ gulp.task('process', () => {
 });
 
 gulp.task('build', ['process'], () => {
-  return gulp.src([`.tmp/${ELEMENT_NAME}/${ELEMENT_NAME}.html`,`.tmp/${ELEMENT_NAME}.html`])
+  return gulp.src([`.tmp/${ELEMENT_NAME}.html`])
           .pipe(errorNotifier())
           .pipe(vulcanize(options.vulcanize))
           .pipe(gulpif(!argv.debug, minify()))
