@@ -1,5 +1,6 @@
 <html><head><meta charset="UTF-8"><link rel="import" href="../sm-ui-button/sm-ui-button.html"><link rel="import" href="../simpla-core/simpla-core.html"><link rel="import" href="../polymer/polymer.html"></head><body><dom-module id="sm-ui-toolbar">
   <template>
+    <style include="sm-css-shady"></style>
     <style include="sm-css"></style>
     <style>:root{--icon-size:14px}:host{@apply(--typography);background:#fff;position:absolute;display:none;box-shadow:0 1px 1px var(--light-black);border-radius:var(--border-radius);overflow:hidden;z-index:var(--on-top)}:host([active]){display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}.tool{width:var(--tool-size);-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;color:var(--blue)}.tool[disabled]{pointer-events:none;color:var(--gray)}.tool::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--blue);display:none}.tool[active]::after{display:block}.link{position:relative;width:0;overflow:hidden}.link__input{position:absolute;width:100%;height:100%;padding-right:var(--tool-size);padding-left:8px;color:var(--textColor)}.link__clear{position:absolute;right:0;width:var(--tool-size);color:var(--gray)}.link__clear:hover{color:red!important}</style>
 
