@@ -12,7 +12,13 @@ class SmUiToolbar {
 
     this.properties = {
       range: Object,
-      scribe: Object
+      scribe: Object,
+      active: {
+        type: Boolean,
+        reflectToAttribute: true,
+        notify: true,
+        value: false
+      }
     };
 
     this.observers = [
@@ -29,9 +35,6 @@ class SmUiToolbar {
 
   get behaviors() {
     return [].concat(
-      simpla.behaviors.active({
-        reflectToAttribute: true
-      }),
       commands,
       positioning
     );

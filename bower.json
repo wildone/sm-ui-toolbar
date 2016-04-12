@@ -23,6 +23,7 @@
     "webcomponentsjs": "^0.7.0",
     "polymer": "^1.2.0",
     "simpla-core": "https://github.com/simplaio/simpla-core.git",
+    "sm-ui-core": "https://github.com/SimplaElements/sm-ui-core.git",
     "sm-ui-button": "https://github.com/simplaio/sm-ui-button.git"
   },
   "devDependencies": {
@@ -33,6 +34,7 @@
   "componentImports": [
     "polymer/polymer.html",
     "simpla-core/simpla-core.html",
+    "sm-ui-core/sm-ui-core.html",
     "sm-ui-button/sm-ui-button.html"
   ]
 }
