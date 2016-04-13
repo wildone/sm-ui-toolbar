@@ -1,4 +1,4 @@
-const easings = simpla.constants.easings,
+const easings = simpla._constants.easings,
       TOOLS = '.tool',
       PROMPT = '.link',
       INPUT = '.link__input',
