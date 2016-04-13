@@ -22,8 +22,8 @@
   "dependencies": {
     "webcomponentsjs": "^0.7.0",
     "polymer": "^1.2.0",
-    "sm-ui-core": "https://github.com/SimplaElements/sm-ui-core.git",
-    "sm-ui-button": "https://github.com/simplaio/sm-ui-button.git"
+    "sm-ui-core": "SimplaElements/sm-ui-core#^0.1.0",
+    "sm-ui-button": "SimplaElements/sm-ui-button#^0.1.0"
   },
   "devDependencies": {
     "web-component-tester": "^3.3.0",
