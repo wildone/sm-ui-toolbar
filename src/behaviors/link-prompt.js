@@ -30,8 +30,8 @@ export default function(observable) {
         tools: {
           target: tools[0],
           frames: [
-            { 'margin-left': 0 },
-            { 'margin-left': '-' + `${offset}px` }
+            { 'marginLeft': 0 },
+            { 'marginLeft': '-' + `${offset}px` }
           ]
         },
         input: {
