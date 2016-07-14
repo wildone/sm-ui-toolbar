@@ -93,13 +93,10 @@ class SmUiToolbar {
 Polymer(SmUiToolbar);
 
 // Inject a singleton
-let singleton = document.createElement('sm-ui-toolbar'),
-    share = document.createElement('sm-utility-share');
+let singleton = document.createElement('sm-ui-toolbar');
 
-// Share it around
-share.type = 'singletons';
-share.key = 'toolbar';
-share.value = singleton;
+window.SmUiToolbar = SmUiToolbar;
+window.SmUiToolbar.singleton = singleton;
 
 // Inject
 if (document.body) {
