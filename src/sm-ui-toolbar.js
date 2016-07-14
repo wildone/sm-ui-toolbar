@@ -1,5 +1,6 @@
 import commands from './behaviors/commands';
 import positioning from './behaviors/positioning';
+import simplaConnector from './behaviors/simpla-connector';
 import selectionEvent from './plugins/selection-event.js';
 import createLinkCommand from './plugins/create-link.js';
 import unlinkCommand from 'scribe-plugin-intelligent-unlink-command';
@@ -36,7 +37,8 @@ class SmUiToolbar {
   get behaviors() {
     return [].concat(
       commands,
-      positioning
+      positioning,
+      simplaConnector
     );
   }
 
@@ -89,3 +91,20 @@ class SmUiToolbar {
 }
 
 Polymer(SmUiToolbar);
+
+// Inject a singleton
+let singleton = document.createElement('sm-ui-toolbar');
+
+window.SmUiToolbar = SmUiToolbar;
+window.SmUiToolbar.singleton = singleton;
+
+// Inject
+if (document.body) {
+  document.body.appendChild(singleton);
+} else {
+  document.addEventListener('readystatechange', () => {
+    if (document.body) {
+      document.body.appendChild(singleton);
+    }
+  });
+}

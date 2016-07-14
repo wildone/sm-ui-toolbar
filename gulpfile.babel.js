@@ -28,7 +28,7 @@ const imports = componentImports.map(dep => `../${dep}`),
           },
           module: {
             loaders: [
-              { test: /\.js$/, loader: 'babel-loader' }
+              { test: /\.js$/, loader: 'babel?presets[]=es2015' }
             ]
           }
         },

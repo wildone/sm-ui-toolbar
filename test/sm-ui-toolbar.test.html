@@ -6,7 +6,35 @@
     <script src="../../webcomponentsjs/webcomponents.min.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
     <script src="../../test-fixture/test-fixture-mocha.js"></script>
+
+    <!-- Controlling animations -->
+    <script src="../../web-animations-js/web-animations-next.min.js"></script>
+    <script>
+    window.flushAnimations = function() {
+        var promises = document.timeline.getAnimations()
+          .map(function(animation) {
+            return new Promise(function(resolve) {
+              animation.addEventListener('finish', resolve);
+              animation.finish();
+            });
+          });
+
+        return Promise.all(promises);
+      }
+    </script>
     <link rel="import" href="../../test-fixture/test-fixture.html">
+    <script>
+      window.simpla = {
+        config: {
+          api: {}
+        }
+      };
+
+      window.Simpla = {
+        observe: sinon.stub().returns(function() {}),
+        getState: sinon.stub().returns({})
+      };
+    </script>
 
     <!-- Use Simpla text for testing -->
     <link rel="import" href="../../simpla-text/simpla-text.html">
@@ -42,22 +70,6 @@
         function expandCommand(command) {
           return { name: command, enabled: true, active: false, use: true };
         }
-
-        // Override Animations
-        (function() {
-          var original = HTMLElement.prototype.animate;
-          HTMLElement.prototype.animate = function() {
-            var animation = original.apply(this, arguments);
-            animations.push(animation);
-            return animation;
-          };
-        })(animations);
-
-        function flushAnimations() {
-          animations.forEach(function(animation) {
-            animation.finish();
-          });
-        };
 
         beforeEach(function() {
           component = fixture('default');
@@ -221,14 +233,16 @@
               original = getLinkWidth();
 
               component.$$('#createLink').click();
-              flushAnimations();
+              return flushAnimations()
+                .then(function() {
+                  expect(getLinkWidth()).to.be.above(original);
 
-              expect(getLinkWidth()).to.be.above(original);
-
-              component.$$('#createLink').click();
-              flushAnimations();
-
-              expect(getLinkWidth()).to.equal(original);
+                  component.$$('#createLink').click();
+                  return flushAnimations();
+                })
+                .then(function() {
+                  expect(getLinkWidth()).to.equal(original);
+                });
             });
 
             it('should fill the input with current A tag href value', function() {
@@ -556,6 +570,33 @@
 
             component.scribe = scribeB;
             expect(component._currentHref).to.equal('');
+          });
+        });
+
+        describe.only('connection to simpla', function() {
+          it('should attach an observer to Simpla\'s editing state', function() {
+            var observed = Simpla.observe.lastCall.args[0];
+            expect(observed).to.equal('editing');
+          });
+
+          it('should be hidden / not hidden when editing / not editing', function() {
+            var callback = Simpla.observe.lastCall.args[1];
+            callback(false);
+            expect(component.hasAttribute('hidden')).to.be.true;
+
+            callback(true);
+            expect(component.hasAttribute('hidden')).to.be.false;
+          });
+        });
+
+        describe('singleton', function() {
+          it('should expose a single on sm-utility-share', function() {
+            var share = document.createElement('sm-utility-share');
+            share.type = 'singletons';
+            share.key = 'toolbar';
+
+            expect(share.value).to.not.be.undefined;
+            expect(share.value.is).to.equal('sm-ui-toolbar');
           });
         });
       });
