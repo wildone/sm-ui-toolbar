@@ -26,7 +26,8 @@ class SmUiToolbar {
       '_loadPlugins(scribe)',
       '_watchForRange(scribe)',
       '_watchForActive(scribe)',
-      '_toggleWindowListener(active)'
+      '_toggleWindowListener(active)',
+      '_ensureVisible(active)'
     ];
 
     this.listeners = {
@@ -88,6 +89,12 @@ class SmUiToolbar {
   _protectClick(event) {
     event._protected = true;
   }
+
+  _ensureVisible(active) {
+    if (active) {
+      this.hidden = false;
+    }
+  }
 }
 
 Polymer(SmUiToolbar);
@@ -97,6 +104,8 @@ let singleton = document.createElement('sm-ui-toolbar');
 
 window.SmUiToolbar = SmUiToolbar;
 window.SmUiToolbar.singleton = singleton;
+
+singleton.hidden = true;
 
 // Inject
 if (document.body) {
