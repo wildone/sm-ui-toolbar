@@ -26,8 +26,7 @@ class SmUiToolbar {
       '_loadPlugins(scribe)',
       '_watchForRange(scribe)',
       '_watchForActive(scribe)',
-      '_toggleWindowListener(active)',
-      '_ensureVisible(active)'
+      '_toggleWindowListener(active)'
     ];
 
     this.listeners = {
@@ -88,12 +87,6 @@ class SmUiToolbar {
 
   _protectClick(event) {
     event._protected = true;
-  }
-
-  _ensureVisible(active) {
-    if (active) {
-      this.hidden = false;
-    }
   }
 }
 

@@ -85,14 +85,6 @@
           expect(component).to.be.ok;
         });
 
-        it('should not be hidden when active', function() {
-          component.active = false;
-          component.hidden = true;
-          component.active = true;
-
-          expect(component.hidden).to.be.false;
-        });
-
         describe('commands', function() {
           var defaultCommandNames = ['bold', 'italic', 'underline', 'createLink'],
               defaultSet = defaultCommandNames.map(expandCommand);
