@@ -1,6 +1,6 @@
 {
   "name": "sm-ui-toolbar",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Toolbar to control a Scribe instance",
   "main": "sm-ui-toolbar.html",
   "scripts": {

@@ -1,7 +1,7 @@
 {
   "name": "sm-ui-toolbar",
   "description": "Toolbar to control a Scribe instance",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "authors": [
     "Simpla <admin@simpla.io>"
   ],
