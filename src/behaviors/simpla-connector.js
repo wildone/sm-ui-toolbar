@@ -8,8 +8,8 @@ export default {
       }
     };
 
-    this._unobserveEditing = Simpla.observe('editing', observeEditing);
-    observeEditing(Simpla.getState().editing);
+    this._unobserveEditing = Simpla._v1.observe('editing', observeEditing);
+    observeEditing(Simpla._v1.getState().editing);
   },
 
   detached() {

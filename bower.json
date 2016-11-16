@@ -23,7 +23,8 @@
     "webcomponentsjs": "^0.7.0",
     "polymer": "^1.2.0",
     "sm-ui-core": "SimplaElements/sm-ui-core#^0.1.0",
-    "sm-ui-button": "SimplaElements/sm-ui-button#^0.1.0"
+    "sm-ui-button": "SimplaElements/sm-ui-button#^0.1.0",
+    "simpla-v2-compat": "simplaio/simpla-v2-compat#^0.1.0"
   },
   "devDependencies": {
     "web-component-tester": "^3.3.0",
@@ -32,6 +33,7 @@
   },
   "componentImports": [
     "polymer/polymer.html",
+    "simpla-v2-compat/simpla-v2-compat.html",
     "sm-ui-core/sm-ui-core.html",
     "sm-ui-button/sm-ui-button.html"
   ]
